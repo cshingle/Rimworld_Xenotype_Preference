@@ -23,12 +23,19 @@ namespace Zig158.XenotypePreference
             var resultingGenes = xenogermGenes
                 .Concat(pawn.genes.Endogenes.Select(g => g.def).Where(gd => gd.passOnDirectly))
                 .ToHashSet();
-            
+
+            if (ideo.PreferredXenotypes.Any(xt => xt.genes.Count == 0) && xenogermGenes.Count == 0)
+            {
+                return true;
+            }
+
             // if pawn has at least the genes in the preferred xenotypes then return true
-            return ideo.PreferredXenotypes.Any(xt =>
-                                              xt.genes.TrueForAll(g => !g.passOnDirectly || resultingGenes.Contains(g))) ||
-                                          ideo.PreferredCustomXenotypes.Any(cx =>
-                                              cx.genes.TrueForAll(g => !g.passOnDirectly || resultingGenes.Contains(g)));
+            return ideo.PreferredXenotypes.Where(def => def.genes.Count > 0)
+                       .Any(xt =>
+                           xt.genes.TrueForAll(g => !g.passOnDirectly || resultingGenes.Contains(g))) ||
+                   ideo.PreferredCustomXenotypes.Where(def => def.genes.Count > 0)
+                       .Any(cx =>
+                           cx.genes.TrueForAll(g => !g.passOnDirectly || resultingGenes.Contains(g)));
         }
     }
 }

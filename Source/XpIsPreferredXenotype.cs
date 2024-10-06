@@ -19,11 +19,19 @@ namespace Zig158.XenotypePreference
         {
             if (!ideo.PreferredXenotypes.Any() && !ideo.PreferredCustomXenotypes.Any() || pawn.genes == null)
                 return false;
+
+            if (pawn.genes.Xenotype != null && ideo.PreferredXenotypes.Contains(pawn.genes.Xenotype))
+                return true;
+            
+            if (pawn.genes.CustomXenotype != null && ideo.PreferredCustomXenotypes.Contains(pawn.genes.CustomXenotype))
+                return true;
             
             var pawnGeneDefs = GetGeneDefSet(pawn);
-            return ideo.PreferredXenotypes.Any(xt =>
+            return ideo.PreferredXenotypes.Where(def => def.genes.Count > 0)
+                       .Any(xt =>
                        xt.genes.TrueForAll(g => !g.passOnDirectly || pawnGeneDefs.Contains(g))) ||
-                   ideo.PreferredCustomXenotypes.Any(cx =>
+                   ideo.PreferredCustomXenotypes.Where(def => def.genes.Count > 0)
+                       .Any(cx =>
                        cx.genes.TrueForAll(g => !g.passOnDirectly || pawnGeneDefs.Contains(g)));
         }
 
