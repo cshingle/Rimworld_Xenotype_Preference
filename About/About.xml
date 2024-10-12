@@ -34,4 +34,5 @@
     <li>ludeon.rimworld.ideology</li>
     <li>ludeon.rimworld.biotech</li>
   </loadAfter>
+  <modVersion IgnoreIfNoMatchingField="True">1.0.2</modVersion>
 </ModMetaData>

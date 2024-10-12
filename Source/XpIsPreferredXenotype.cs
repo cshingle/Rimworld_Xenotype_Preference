@@ -20,7 +20,8 @@ namespace Zig158.XenotypePreference
             if (!ideo.PreferredXenotypes.Any() && !ideo.PreferredCustomXenotypes.Any() || pawn.genes == null)
                 return false;
 
-            if (pawn.genes.Xenotype != null && ideo.PreferredXenotypes.Contains(pawn.genes.Xenotype))
+            // check that xenotype matches, and there is no custom xenotype
+            if (pawn.genes.Xenotype != null && pawn.genes.CustomXenotype == null && ideo.PreferredXenotypes.Contains(pawn.genes.Xenotype))
                 return true;
             
             if (pawn.genes.CustomXenotype != null && ideo.PreferredCustomXenotypes.Contains(pawn.genes.CustomXenotype))
