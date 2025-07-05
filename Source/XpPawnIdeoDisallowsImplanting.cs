@@ -16,8 +16,10 @@ namespace Zig158.XenotypePreference
         private static bool CanPawnAcceptXenogerm(Pawn pawn, Xenogerm xenogerm)
         {
             var ideo = pawn.Ideo;
-            if (!ideo.PreferredXenotypes.Any() && !ideo.PreferredCustomXenotypes.Any() || pawn.genes == null)
+            if (XpIsPreferredXenotype.HasPreferredXenotypes(ideo))
                 return true;
+            
+            
 
             var xenogermGenes = xenogerm.GeneSet.GenesListForReading.Where(g => g.passOnDirectly).ToHashSet();
             var resultingGenes = xenogermGenes
